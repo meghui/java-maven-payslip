@@ -77,14 +77,14 @@ public class Employee {
     }
 
     public void setStartDate(String startDate) {
-//        /**
-//         * setStartDate() adds function of adding "0" before the day if day is 1 ~ 9;
-//         */
-//        String day = startDate.substring(0, startDate.indexOf(" "));
-//        String zero = "0";
-//        if (day.length() == 1) {
-//            startDate = zero + startDate;
-//        }
+        /**
+         * setStartDate() adds function of adding "0" before the day if day is 1 ~ 9;
+         */
+        String day = startDate.substring(0, startDate.indexOf(" "));
+        String zero = "0";
+        if (day.length() == 1) {
+            startDate = zero + startDate;
+        }
         this.startDate = startDate;
     }
 
