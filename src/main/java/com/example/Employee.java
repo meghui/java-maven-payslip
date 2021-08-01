@@ -2,7 +2,6 @@ package com.example;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Scanner;
 
 
@@ -78,14 +77,14 @@ public class Employee {
     }
 
     public void setStartDate(String startDate) {
-        /**
-         * setStartDate() adds function of adding "0" before the day if day is 1 ~ 9;
-         */
-        String day = startDate.substring(0, startDate.indexOf(" "));
-        String zero = "0";
-        if (day.length() == 1) {
-            startDate = zero + startDate;
-        }
+//        /**
+//         * setStartDate() adds function of adding "0" before the day if day is 1 ~ 9;
+//         */
+//        String day = startDate.substring(0, startDate.indexOf(" "));
+//        String zero = "0";
+//        if (day.length() == 1) {
+//            startDate = zero + startDate;
+//        }
         this.startDate = startDate;
     }
 
@@ -119,7 +118,7 @@ public class Employee {
     }
 
     public void setGrossIncome(int annualSalary) {
-        this.grossIncome = Math.round(annualSalary / 12);
+        this.grossIncome = Math.round((float)annualSalary / 12);
     }
 
     public int getNetIncome() {
@@ -187,87 +186,133 @@ public class Employee {
                 + getSuperValue() ;
     }
 
-    //formatStartDate() formats the StartDate to the one with lettered month
-    public String formatStartDateMonthToLetterRemoveYear(String startDate) {
-        startDate = formatStartDateMonthToNum(startDate);
-        LocalDate convertedStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("d M yyyy")); //String "1 3 2021" to LocalDate;LocalDate.parse() parses String date to LocalDate object;
-        String formattedStartDate = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(convertedStartDate);
-        formattedStartDate = formattedStartDate.substring(0, formattedStartDate.indexOf(" ",formattedStartDate.indexOf(" ")+1)); //.substring() removes year which is from the 2nd space;
-        return formattedStartDate;
-    }
 
-    public String formatStartDateMonthToNum(String startDate) {
-        //
-        String month = String.valueOf(mapMonthNum(startDate.substring(startDate.indexOf(" ")+1)));
+    //formatStartDate() changes month from letters to number then adds year after it.
+    public String formatStartDate(String startDate) {
+        //substring() remove day and space
+        String month = String.valueOf(mapMonthLettersToNum(startDate.substring(startDate.indexOf(" ")+1)));
         //The input start date has no year
-        startDate = startDate.substring(0,startDate.indexOf(" ")) + " " + month + " 2021"; //1 March -> 1 3 2021
+        startDate = startDate.substring(0,startDate.indexOf(" ")) + " " + month + " 2021"; //1 3 -> 1 3 2021
         return startDate;
     }
 
-    //mapMonthNum() maps the month to its number presenting
-    public int mapMonthNum (String month) {
-        int monthNum = -1;
-        switch (month) {
+    //mapMonthLetterToNum maps the month to its number presenting
+    public String mapMonthLettersToNum (String monthLetters) {
+        String monthNum = "-1";
+        switch (monthLetters) {
             case "January":
             case "Jan":
-                monthNum = 1;
+                monthNum = "1";
                 break;
             case "February":
             case "Feb":
-                monthNum = 2;
+                monthNum = "2";
                 break;
             case "March":
             case "Mar":
-                monthNum = 3;
+                monthNum = "3";
                 break;
             case "April":
             case "Apr":
-                monthNum = 4;
+                monthNum = "4";
                 break;
             case "May":
-                monthNum = 5;
+                monthNum = "5";
                 break;
             case "June":
             case "Jun":
-                monthNum = 6;
+                monthNum = "6";
                 break;
             case "July":
             case "Jul":
-                monthNum = 7;
+                monthNum = "7";
                 break;
             case "August":
             case "Aug":
-                monthNum = 8;
+                monthNum = "8";
                 break;
             case "September":
             case "Sep":
-                monthNum = 9;
+                monthNum = "9";
                 break;
             case "October":
             case "Oct":
-                monthNum = 10;
+                monthNum = "10";
                 break;
             case "November":
             case "Nov":
-                monthNum = 11;
+                monthNum = "11";
                 break;
             case "December":
             case "Dec":
-                monthNum = 12;
+                monthNum = "12";
                 break;
         }
         return monthNum;
     }
+    public String mapMonthNumToLetters (String monthNum) {
+        String monthLetters = null;
+        if (monthNum.charAt(0) == '0') {
+            monthNum = monthNum.substring(1);
+        }
+        switch (monthNum) {
+            case "1":
+                monthLetters = "January";
+                break;
+            case "2":
+                monthLetters = "February";
+                break;
+            case "3":
+                monthLetters = "March";
+                break;
+            case "4":
+                monthLetters = "April";
+                break;
+            case "5":
+                monthLetters = "May";
+                break;
+            case "6":
+                monthLetters = "June";
+                break;
+            case "7":
+                monthLetters = "July";
+                break;
+            case "8":
+                monthLetters = "August";
+                break;
+            case "9":
+                monthLetters = "September";
+                break;
+            case "10":
+                monthLetters = "October";
+                break;
+            case "11":
+                monthLetters = "November";
+                break;
+            case "12":
+                monthLetters = "December";
+                break;
+        }
+        return monthLetters;
+    }
 
     //calEndDate() calculates the end date of the month based on the startDate
     //calEndDate() is the most time-consuming among all the methods in com.example.Employee.java
-    public String calEndDate (String startDate)  {
-        startDate = formatStartDateMonthToNum(startDate);
-        LocalDate convertedStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("d M yyyy")); //String "1 3 2021" to LocalDate;LocalDate.parse() parses String date to LocalDate
-        LocalDate lastDateOfMonth = LocalDate.of(convertedStartDate.getYear(), convertedStartDate.getMonth(), convertedStartDate.getMonth().length(convertedStartDate.isLeapYear())); //31 3 2021;LocalDate.withDayOfMonth() gets the length of the month; LocalDate.getMonth() gets the month of given date; LocalDate.isLeapYear() adds one day for Feb if leap year;
-        String formattedLastDateOfMonth = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(lastDateOfMonth);//31 March 2021
-        String lastDateOfMonthNoYear = formattedLastDateOfMonth.substring(0, formattedLastDateOfMonth.indexOf(" ", formattedLastDateOfMonth.indexOf(" ")+1));
-        return this.endDate = lastDateOfMonthNoYear;
+    public String calEndDate (String startDate)  {//1 March
+        startDate = formatStartDate(startDate);//1 March -> 1 3 2021
+        LocalDate convertedSD = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("d M yyyy")); //String "1 3 2021" to LocalDate;LocalDate.parse() parses String date to LocalDate
+
+        LocalDate lastDateOfMonth = LocalDate.of(convertedSD.getYear(), convertedSD.getMonth(), convertedSD.getMonth().length(convertedSD.isLeapYear())); //2021-03-31;LocalDate.withDayOfMonth() gets the length of the month; LocalDate.getMonth() gets the month of given date; LocalDate.isLeapYear() adds one day for Feb if leap year;
+        String monthEnd = lastDateOfMonth.toString();//2021-03-31
+        //DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG).format(lastDateOfMonth);//In InteliJ:31 Mar 2021; In Google Cloud Minikube, Mar 31, 2021
+
+        String st = monthEnd.substring(monthEnd.indexOf("-")+1);//2021-03-31 -> 03-31
+        String day = st.substring(st.indexOf("-")+1);
+        String month = st.substring(0, st.indexOf("-")); //03-31 -> 03
+        month = mapMonthNumToLetters(month);// 03 -> March
+        monthEnd = day + " "+ month; // 31 March
+
+        return this.endDate = monthEnd;
     }
 
     //convert csv line to employee's attributes
@@ -284,7 +329,7 @@ public class Employee {
 
         //Below attributes need calculation/formatting to set
         setFullName(getFirstName(),getLastName());
-        setEndDate(formatStartDateMonthToLetterRemoveYear(getStartDate()));
+        setEndDate(getStartDate());
         setGrossIncome(getAnnualSalary());
         setIncomeTax(getAnnualSalary());
         setSuperValue(getSuperRate());
@@ -312,5 +357,6 @@ public class Employee {
         Employee emp2 = new Employee();
         //emp2Input = "Brend,Tulu,120000,10%,1 March";
         emp2.output(csv);
+
     }
 }
