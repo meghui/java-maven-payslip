@@ -1,6 +1,9 @@
+package com.example;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Scanner;
 
 
 /**
@@ -206,39 +209,50 @@ public class Employee {
         int monthNum = -1;
         switch (month) {
             case "January":
+            case "Jan":
                 monthNum = 1;
                 break;
             case "February":
+            case "Feb":
                 monthNum = 2;
                 break;
             case "March":
+            case "Mar":
                 monthNum = 3;
                 break;
             case "April":
+            case "Apr":
                 monthNum = 4;
                 break;
             case "May":
                 monthNum = 5;
                 break;
             case "June":
+            case "Jun":
                 monthNum = 6;
                 break;
             case "July":
+            case "Jul":
                 monthNum = 7;
                 break;
             case "August":
+            case "Aug":
                 monthNum = 8;
                 break;
             case "September":
+            case "Sep":
                 monthNum = 9;
                 break;
             case "October":
+            case "Oct":
                 monthNum = 10;
                 break;
             case "November":
+            case "Nov":
                 monthNum = 11;
                 break;
             case "December":
+            case "Dec":
                 monthNum = 12;
                 break;
         }
@@ -246,7 +260,7 @@ public class Employee {
     }
 
     //calEndDate() calculates the end date of the month based on the startDate
-    //calEndDate() is the most time-consuming among all the methods in Employee.java
+    //calEndDate() is the most time-consuming among all the methods in com.example.Employee.java
     public String calEndDate (String startDate)  {
         startDate = formatStartDateMonthToNum(startDate);
         LocalDate convertedStartDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("d M yyyy")); //String "1 3 2021" to LocalDate;LocalDate.parse() parses String date to LocalDate
@@ -278,13 +292,25 @@ public class Employee {
         //Below attribute need a 3rd calculation--Can't tell but it is different from above
         setNetIncome(getGrossIncome(),getIncomeTax());
         setPayPeriod(getStartDate(),getEndDate());
-
-
     }
 
     //output() outputs the payslip based on the given employee's information; it shows encapsulation of the program as well as the design
     public void output (String csvLine) {
         csvConverter(csvLine);
         System.out.println(toString());
+    }
+
+    public static void main(String[] args) {
+        System.out.print("Please input the csv for employee 1:");
+        Scanner sc = new Scanner(System.in);
+        String csv = sc.nextLine();
+        Employee emp1 = new Employee();
+        //emp1Input = "Monica,Tan,60050,9%,1 March";
+        emp1.output(csv);
+        System.out.print("Please input the csv for employee 2:");
+        csv = sc.nextLine();
+        Employee emp2 = new Employee();
+        //emp2Input = "Brend,Tulu,120000,10%,1 March";
+        emp2.output(csv);
     }
 }
