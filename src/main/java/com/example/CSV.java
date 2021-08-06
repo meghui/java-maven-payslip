@@ -1,27 +1,16 @@
 package com.example;
 
-
 /**
  * @author Meggie Xuan Hui
- * @since 30/7/21
- * The order of inputs is
- * first name,
- * last name,
- * annual salary,
- * super rate (%),
- * payment start date.
- *
+ * @since 4/8/21
  */
-
-public class Employee {
+public class CSV {
 
     private String firstName = null;
     private String lastName = null;
-    private int annualSalary;
-    private float superRate;
-
-    private String startDateOfPayment; //TODO find a more efficient way to store date --I am trying additional csv.java
-
+    private String annualSalary = null;
+    private String superRate = null;
+    private String startDateOfPayment = null;
 
     public String getFirstName() {
         return firstName;
@@ -39,19 +28,19 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public int getAnnualSalary() {
+    public String getAnnualSalary() {
         return annualSalary;
     }
 
-    public void setAnnualSalary(int annualSalary) {
-            this.annualSalary = annualSalary;
+    public void setAnnualSalary(String annualSalary) {
+        this.annualSalary = annualSalary;
     }
 
-    public float getSuperRate() {
-        return this.superRate;
+    public String getSuperRate() {
+        return superRate;
     }
 
-    public void setSuperRate(float superRate) {
+    public void setSuperRate(String superRate) {
         this.superRate = superRate;
     }
 

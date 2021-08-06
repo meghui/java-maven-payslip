@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="payslip4seisma:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/payslip4seisma_war</output-path>
+    <root id="archive" name="payslip4seisma_war.war">
+      <element id="artifact" artifact-name="payslip4seisma:war exploded" />
+    </root>
+  </artifact>
+</component>
