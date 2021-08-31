@@ -1,4 +1,4 @@
-# payslip4seisma
+# java-maven-payslip
 
 README.txt
 Java version: 11
